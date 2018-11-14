@@ -8,6 +8,10 @@ class Vertex:
     def __init__(self, name, color=WHITE):
         self.name = name
         self.color = color
+        self.neighbors = {}
+
+    def setEdge(self, name, weight=1):
+        self.neighbors[name] = weight
 
     def getName(self):
         return self.name
