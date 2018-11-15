@@ -1,6 +1,4 @@
-WHITE = "white"
-GRAY = "gray"
-BLACK = "black"
+from constants import WHITE, GRAY, BLACK
 
 
 class Vertex:
@@ -8,16 +6,19 @@ class Vertex:
     def __init__(self, name, color=WHITE):
         self.name = name
         self.color = color
-        self.neighbors = {}
+        self.distance = -1
 
-    def setEdge(self, name, weight=1):
-        self.neighbors[name] = weight
+    def setDistance(self, value):
+        self.distance = value
 
     def getName(self):
         return self.name
 
     def getColor(self):
         return self.color
+
+    def getDistance(self):
+        return self.distance
 
     def discover(self):
         self.color = GRAY
