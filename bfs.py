@@ -1,6 +1,6 @@
-from graph import Graph
 from queue import Queue
 from constants import WHITE
+from graph import Graph
 
 
 def bfs(graph, start):
@@ -17,15 +17,16 @@ def bfs(graph, start):
 
         neighbors = graph.getVertexNeighbors(currentVertex)
         for n in neighbors:
-            graph.discoverVertex(n)
-            queue.put((n, vertexDist + 1))
+            if graph.getColorOfVertex(n) is WHITE:
+                graph.discoverVertex(n)
+                queue.put((n, vertexDist + 1))
 
 
-# vertices = ["W", "S", "T", "U", "V", "R", "X", "Y"]
-# edges = [("W", "S"), ("W", "V"), ("S", "R"), ("R", "T"), ("R", "X"), ("T", "X"), ("T", "U"), ("X", "Y"), ("U", "Y")]
+vertices = ["W", "S", "T", "U", "V", "R", "X", "Y"]
+edges = [("W", "S"), ("W", "V"), ("S", "R"), ("R", "T"), ("R", "X"), ("T", "X"), ("T", "U"), ("X", "Y"), ("U", "Y")]
 
-# graph = Graph(vertices, edges)
+graph = Graph(vertices, edges)
 
-# bfs(graph, "S")
-# for v in graph.vertices:
-#     print(v.getName() + ".distance : " + str(v.getDistance()))
+bfs(graph, "S")
+for v in graph.vertices:
+    print(v.getName() + ".distance : " + str(v.getDistance()))

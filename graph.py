@@ -1,5 +1,5 @@
 from vertex import Vertex
-from constants import *
+from constants import TO_VERTEX, FROM_VERTEX, WEIGHT
 
 
 class Graph:
@@ -16,16 +16,25 @@ class Graph:
         self.directed = directed
         self.weighted = weighted
         self.verticesRef = vertices
+        self.verticesRef.sort()
         self.vertices = [Vertex(l) for l in vertices]
         self.edges = self.generateAdjacencyMatrix(edges, len(vertices))
+
+    def getVertices(self):
+        return self.vertices
+
+    def getVerticesRef(self):
+        return self.verticesRef
 
     def getVertex(self, name):
         return self.vertices[self.indexOf(name)]
 
     def getVertexNeighbors(self, name):
         adjacent = self.edges[self.indexOf(name)]
-        return list(filter(lambda x: adjacent[self.indexOf(x)] == 1 and
-                           self.getColorOfVertex(x) == WHITE, self.verticesRef))
+        return list(filter(lambda x: adjacent[self.indexOf(x)] == 1, self.verticesRef))
+
+    def getSize(self):
+        return len(self.vertices)
 
     def discoverVertex(self, name):
         self.vertices[self.indexOf(name)].discover()
@@ -41,6 +50,19 @@ class Graph:
 
     def updateDistance(self, name, value):
         self.vertices[self.indexOf(name)].setDistance(value)
+
+    def updateDiscoverTime(self, name, value):
+        self.vertices[self.indexOf(name)].setDiscoverTime(value)
+
+    def updateFinishTime(self, name, value):
+        self.vertices[self.indexOf(name)].setFinishTime(value)
+
+    def updateVertexOrigin(self, origin, target):
+        self.vertices[self.indexOf(origin)].setOrigin(target)
+
+    def sortVertices(self):
+        self.vertices.sort()
+        self.verticesRef.sort()
 
     def generateAdjacencyMatrix(self, edges, numVertices):
         """generates the adjacency matrix given the edges
@@ -72,7 +94,13 @@ class Graph:
         matrix[self.verticesRef.index(u)][self.verticesRef.index(v)] = value
 
 
-# vertices = ["A", "B", "C", "D"]
+# vertices = ["D", "C", "B", "A"]
 # edges = [("A", "B"), ("A", "C"), ("A", "D"), ("B", "C"), ("C", "D")]
 
 # graph = Graph(vertices, edges)
+# for v in graph.vertices:
+#     print(v.name)
+# graph.sortVertices()
+# print("sort")
+# for v in graph.vertices:
+#     print(v.name)
